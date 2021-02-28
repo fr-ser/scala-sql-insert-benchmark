@@ -1,0 +1,5 @@
+# Scala
+target/
+.bloop
+.metals
+.bsp

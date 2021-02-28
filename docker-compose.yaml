@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  database:
+    image: postgres:12-alpine
+    # uncomment to see every executed query logged (degrades performance)
+    # command: ["postgres", "-c", "log_statement=all"]
+    ports:
+      - "35432:5432"
+    environment:
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "pass"
+      POSTGRES_DB: "main"
+    volumes:
+      - ./bootstrap.sql:/docker-entrypoint-initdb.d/bootstrap.sql
+  wait-for-db:
+    image: dadarek/wait-for-dependencies:0.2
+    depends_on:
+      - database
+    command: database:5432
